@@ -1,11 +1,11 @@
-from flask import Flask, request, send_file
-import requests
-from PIL import Image
-from io import BytesIO
-from google.cloud import storage
-import uuid 
+# from flask import Flask, request, send_file
+# import requests
+# from PIL import Image
+# from io import BytesIO
+# from google.cloud import storage
+# import uuid 
 
-import os
+# import os
 
 app = Flask(__name__)
 
@@ -55,7 +55,3 @@ def hello_world():
 # def id_generator():
 #     img_id=str(uuid.uuid1())
 #     return img_id
-
-if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host='0.0.0.0', port=port)
