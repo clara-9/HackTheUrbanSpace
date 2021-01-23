@@ -5,9 +5,6 @@ from io import BytesIO
 
 import os
 
-print(os.getenv('GOOGLE_API_KEY'))
-
-
 app = Flask(__name__)
 
 @app.route('/')
