@@ -1,12 +1,10 @@
 from flask import Flask, request, send_file
 import requests
-import PIL
-from PIL import Image
 from io import BytesIO
 from google.cloud import storage
 import uuid 
 
-# import os
+import os
 
 app = Flask(__name__)
 
