@@ -56,5 +56,6 @@ def hello_world():
 #     img_id=str(uuid.uuid1())
 #     return img_id
 
-# if __name__ == "__main__":
-#     app.run(host = '127.0.0.1', port = 8080, debug=True)
+if __name__ == '__main__':
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
