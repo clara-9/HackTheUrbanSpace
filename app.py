@@ -67,7 +67,7 @@ def bird_capture():
     now = datetime.now()
     print(now)
     session.execute("""INSERT INTO dataspace.hostile_arch (image_id, latitude, longitude, timestamp, user_id) 
-                    VALUES (%s, %s, %s,%s, 'admin')", (img_id, float(lat), float(lon), now))"""
+                    VALUES (%s, %s, %s,%s, 'admin')""", (img_id, float(lat), float(lon), now))
     return img_id
 
 @app.route("/img_id_creator")
