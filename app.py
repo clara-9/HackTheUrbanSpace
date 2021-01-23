@@ -3,6 +3,7 @@ import requests
 from PIL import Image
 from io import BytesIO
 from google.cloud import storage
+import uuid 
 
 import os
 
@@ -23,7 +24,7 @@ def street_view():
     return send_file(i, mimetype='image/jpeg')
 
 @app.route("/bucket_upload", methods=['POST'])
-def upload_to_bucket(img_name, path_to_file, bucket_name):
+def upload_to_bucket(img_name, path_to_file):
     """ Upload data to a bucket"""
 
     # Explicitly use service account credentials by specifying the private key
@@ -31,12 +32,26 @@ def upload_to_bucket(img_name, path_to_file, bucket_name):
     storage_client = storage.Client.from_service_account_json(
         'keys.json')
 
-    #print(buckets = list(storage_client.list_buckets())
-
-    bucket = storage_client.get_bucket(bucket_name)
+    bucket = storage_client.get_bucket('hostile-images')
     blob = bucket.blob(img_name)
     blob.upload_from_filename(path_to_file)
 
     #returns a public url
     print(blob.public_url)
     return blob.public_url
+
+
+@app.route("/send_image", methods=['POST'])
+def bird_capture():
+    file=request.files['file']
+    print(file)
+    path=os.path.join("/tmp/", file.name)
+    file.save(path)
+    img_id=id_generator()+".jpg"
+    image_url=upload_to_bucket(img_id, path)
+    return img_id
+
+@app.route("/img_id_creator")
+def id_generator():
+    img_id=str(uuid.uuid1())
+    return img_id
