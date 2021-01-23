@@ -1,6 +1,6 @@
 from flask import Flask, request, send_file
 import requests
-from PIL import Image
+import Image
 from io import BytesIO
 from google.cloud import storage
 import uuid 
