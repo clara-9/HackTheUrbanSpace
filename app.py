@@ -53,7 +53,7 @@ def upload_to_bucket(img_name, path_to_file):
     print(blob.public_url)
     return blob.public_url
 
-
+#TODO send image to AI model
 @app.route("/send_image", methods=['POST'])
 def bird_capture():
     file=request.files['file']
@@ -66,6 +66,8 @@ def bird_capture():
     image_url=upload_to_bucket(img_id, path)
     now = datetime.now()
     print(now)
+    # if image.is_hostile_arch():
+        # cassandra execute
     session.execute("""INSERT INTO dataspace.hostile_arch (image_id, latitude, longitude, timestamp, user_id) 
                     VALUES (%s, %s, %s,%s, 'admin')""", (img_id, float(lat), float(lon), now))
     return img_id
