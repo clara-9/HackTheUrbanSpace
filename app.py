@@ -1,4 +1,4 @@
-from flask import Flask, request, send_file
+from flask import Flask, request, send_file, render_template
 import requests
 from io import BytesIO
 from google.cloud import storage
@@ -9,14 +9,13 @@ from cassandra.cluster import Cluster
 from cassandra.auth import PlainTextAuthProvider
 from cassandra.query import dict_factory
 
-cloud_config= {
-        'secure_connect_bundle': 'secure-connect-hackcambridge.zip'
-}
+# cloud_config= {
+#         'secure_connect_bundle': 'secure-connect-hackcambridge.zip'
+# }
 
-auth_provider = PlainTextAuthProvider('clara', 'helloclara')
-cluster = Cluster(cloud=cloud_config, auth_provider=auth_provider)
-session = cluster.connect('dataspace')
-
+# auth_provider = PlainTextAuthProvider('clara', 'helloclara')
+# cluster = Cluster(cloud=cloud_config, auth_provider=auth_provider)
+# session = cluster.connect('dataspace')
 
 import os
 
@@ -24,7 +23,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def hello_world():
-    return 'Hello, World!'
+    return render_template('index.html')
 
 # sample request: http://127.0.0.1:5000/street_view?lat=46.414382&lon=10.013988
 @app.route("/street_view")
