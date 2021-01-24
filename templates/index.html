@@ -8,12 +8,12 @@
         <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
 
         <!--========== CSS ==========-->
-        <link rel="stylesheet" href="assets/css/styles.css">
+        <link rel="stylesheet" href="static/css/styles.css">
         
         <!-- Google Web FOnts  -->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons"rel="stylesheet">
 
-        <title> Hack The Urban Space : Hostile Architecture </title>
+        <title> Hack The Urban Space | Hostile Architecture </title>
     </head>
     <body>
 
@@ -51,11 +51,11 @@
                 <div class="home__container bd-container bd-grid">
                     <div class="home__data">
                         <h1 class="home__title">HackTheUrban.Space</h1>
-                        <h2 class="home__subtitle">Public space should be for everyone <br> Safe , Secure and Healthy </h2>
+                        <h2 class="home__subtitle">Public space is for everyone. <br> Safe, secure and healthy </h2>
                         <a href="#" class="button">Upload Image</a>
                     </div>
     
-                    <!-- <img src="assets/img/1.jpg" alt="" class="home__img"> -->
+                    <!-- <img src="static/img/1.jpg" alt="" class="home__img"> -->
                 </div>
             </section>
             
@@ -64,22 +64,28 @@
                 <div class="about__container  bd-grid">
                     <div class="about__data">
                         <span class="section-subtitle about__initial">Upload Image </span>
-                        <h2 class="section-title about__initial">Help Us finding hostile <br> Architecture </h2>
+                        <h2 class="section-title about__initial">Help us find <br> Hostile Architecture </h2>
                         <p class="about__description">Each and every person should have the right to know the safe places around the localty near them. help us is makin gthis a reality.</p>
 
-                        
-                        <label for="file">
-                            <input type="file" id="file" class="button" accept="image/*">
-                            <span class="material-icons">
-                                add_photo_alternate
-                             </span> &nbsp;
-                                Choose a Photo 
-                        </label>
+                        <!--<form method="POST" action="/send_image" enctype="multipart/form-data">
+                            <label for="file">
+                                <input type="file" id="file" class="button" accept="image/*">
+                                <span class="material-icons">
+                                    add_photo_alternate
+                                 </span> &nbsp;
+                                    Choose a Photo 
+                            </label>
+                        </form> -->
+
+                        <form method="POST" action="/send_image" enctype="multipart/form-data">
+                          <input type="file" name="file" value="Choose a photo" class="button">
+                          <input type="submit" value="Submit" class="button">
+                        </form>
 
 
                     </div>
 
-                    <img src="assets/img/1.jpg" alt="" class="about__img">
+                    <img src="static/img/1.jpg" alt="" class="about__img">
                 </div>
             </section>
 
@@ -152,7 +158,7 @@
                             46.6405 18.816 45.964 18.3989 45.5466Z"/>
                         </svg>
                         <h3 class="services__title">What Is Hostile Design For?</h3>
-                        <p class="services__description">Hostile design is typically implemented to deter whatever behaviour the local authorities feel is most disruptive to their society, from littering to loitering, drug use, and even homelessness</p>
+                        <p class="services__description">Hostile design is typically implemented to deter whatever behaviour the local authorities feel is inappropiate, and it has been used frequently to target homeless people.</p>
                     </div>
 
                     <div class="services__content">
@@ -309,7 +315,7 @@
                             </defs>
                         </svg>
                         <h3 class="services__title">Debate of Hostile Design</h3>
-                        <p class="services__description">According to proponents of hostile design, this approach helps to keep public spaces clean and safe. However, many debate the ethics and aesthetics behind this approach.</p>
+                        <p class="services__description">According to proponents of hostile design, this approach helps to keep public spaces clean and safe. However, many debate the ethics and aesthetics behind this approach. Shouldn't public space be public?</p>
                     </div>
                     
 
@@ -378,14 +384,14 @@
                     <div class="app__data">
                         <span class="section-subtitle app__initial"></span>
                         <h2 class="section-title app__initial">Check Us Twitter Tweets </h2>
-                        <p class="app__description"> Take a sneek Peek at our Twitter Tweets to find out the Hostile Designb Near You</p>
+                        <p class="app__description"> Take a sneek Peek at our Twitter Tweets to find out the Hostile Architecture Elements Near You</p>
                         <div class="app__stores">
-                            <a href="#"><img src="assets/img/3.png" alt="" class="app__store"></a>
-                            <a href="#"><img src="assets/img/4.jpg" alt="" class="app__store"></a>
+                            <a href="#"><img src="static/img/3.png" alt="" class="app__store"></a>
+                            <a href="#"><img src="static/img/4.jpg" alt="" class="app__store"></a>
                         </div>
                     </div>
 
-                    <img src="assets/img/2.jpg" alt="" class="app__img">
+                    <img src="static/img/2.jpg" alt="" class="app__img">
                 </div>
             </section>
 
@@ -442,7 +448,7 @@
         <script src="https://unpkg.com/scrollreveal"></script>
 
         <!--========== MAIN JS ==========-->
-        <script src="assets/js/main.js"></script>
+        <script src="static/js/main.js"></script>
 
  <!-- <script>
      const myForm = document.getElementById("myForm");

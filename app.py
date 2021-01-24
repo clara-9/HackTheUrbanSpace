@@ -1,4 +1,4 @@
-from flask import Flask, request, send_file, render_template
+from flask import Flask, request, send_file, render_template, redirect, url_for
 import requests
 from io import BytesIO
 from google.cloud import storage
@@ -9,13 +9,13 @@ from cassandra.cluster import Cluster
 from cassandra.auth import PlainTextAuthProvider
 from cassandra.query import dict_factory
 
-# cloud_config= {
-#         'secure_connect_bundle': 'secure-connect-hackcambridge.zip'
-# }
+cloud_config= {
+        'secure_connect_bundle': 'secure-connect-hackcambridge.zip'
+}
 
-# auth_provider = PlainTextAuthProvider('clara', 'helloclara')
-# cluster = Cluster(cloud=cloud_config, auth_provider=auth_provider)
-# session = cluster.connect('dataspace')
+auth_provider = PlainTextAuthProvider('clara', 'helloclara')
+cluster = Cluster(cloud=cloud_config, auth_provider=auth_provider)
+session = cluster.connect('dataspace')
 
 import os
 
@@ -24,6 +24,10 @@ app = Flask(__name__)
 @app.route('/')
 def hello_world():
     return render_template('index.html')
+
+@app.route('/file')
+def hello_file():
+    return render_template('file.html')
 
 # sample request: http://127.0.0.1:5000/street_view?lat=46.414382&lon=10.013988
 @app.route("/street_view")
@@ -55,6 +59,7 @@ def upload_to_bucket(img_name, path_to_file):
 #TODO send image to AI model
 @app.route("/send_image", methods=['POST'])
 def bird_capture():
+    print(request)
     file=request.files['file']
     lat=request.args.get("lat")
     lon=request.args.get("lon")
@@ -69,7 +74,7 @@ def bird_capture():
         # cassandra execute
     session.execute("""INSERT INTO dataspace.hostile_arch (image_id, latitude, longitude, timestamp, user_id) 
                     VALUES (%s, %s, %s,%s, 'admin')""", (img_id, float(lat), float(lon), now))
-    return img_id
+    return redirect(url_for('index'))
 
 @app.route("/img_id_creator")
 def id_generator():

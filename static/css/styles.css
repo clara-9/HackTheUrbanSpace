@@ -554,9 +554,6 @@ img{
   }
 }
 
-
-input[type ="file"]
-{ display: none;}
 label{
   background-color: var(--first-color);
   color: #FFF;
