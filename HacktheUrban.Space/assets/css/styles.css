@@ -567,3 +567,8 @@ label{
   display: flex;
   align-items: center;
 }
+
+.map{
+  position: relative;
+  margin-left: 500px;
+}
