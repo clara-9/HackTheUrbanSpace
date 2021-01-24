@@ -85,7 +85,7 @@ def go_cassandra():
         print(rows)
     else:
         print("An error occurred.")
-    return {"rows":rows}
+    return json.dumps({"rows":rows})
 
         
 
