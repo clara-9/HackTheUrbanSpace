@@ -1,6 +1,7 @@
 from flask import Flask, request, send_file, render_template, redirect, url_for
 import requests
 from io import BytesIO
+import simplejson as json
 from google.cloud import storage
 import uuid 
 from datetime import datetime
@@ -90,7 +91,7 @@ def id_generator():
 @app.route("/hostile_data")
 def go_cassandra():
     session.row_factory = dict_factory
-    rows = session.execute("select * from hostile_arch").all()
+    rows = session.execute("select image_id, user_id, latitude, longitude from hostile_arch").all()
     #take into account url for image downlad is https://storage.googleapis.com/hostile-images and the id
     print(rows)
     if rows:
