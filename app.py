@@ -9,7 +9,11 @@ from cassandra.cluster import Cluster
 from cassandra.auth import PlainTextAuthProvider
 from cassandra.query import dict_factory
 
-cloud_config= {
+from src.predict import Model
+import os
+
+
+cloud_config = {
         'secure_connect_bundle': 'secure-connect-hackcambridge.zip'
 }
 
@@ -17,9 +21,11 @@ auth_provider = PlainTextAuthProvider('clara', 'helloclara')
 cluster = Cluster(cloud=cloud_config, auth_provider=auth_provider)
 session = cluster.connect('dataspace')
 
-import os
-
 app = Flask(__name__)
+
+model_path = './models/resnet152.pkl'
+model = Model(model_path)
+
 
 @app.route('/')
 def hello_world():
@@ -32,9 +38,9 @@ def hello_file():
 # sample request: http://127.0.0.1:5000/street_view?lat=46.414382&lon=10.013988
 @app.route("/street_view")
 def street_view():
-    latitude=request.args.get("lat")
-    longitude=request.args.get("lon")
-    payload = {'size': '600x300', 'location': f'{latitude},{longitude}', 'key':os.getenv('GOOGLE_API_KEY')}
+    latitude = request.args.get("lat")
+    longitude = request.args.get("lon")
+    payload = {'size': '600x300', 'location': f'{latitude},{longitude}', 'key': os.getenv('GOOGLE_API_KEY')}
     r = requests.get('https://maps.googleapis.com/maps/api/streetview', params=payload)
     i = BytesIO(r.content)
     return send_file(i, mimetype='image/jpeg')
@@ -52,7 +58,7 @@ def upload_to_bucket(img_name, path_to_file):
     blob = bucket.blob(img_name)
     blob.upload_from_filename(path_to_file)
 
-    #returns a public url
+    # returns a public url
     print(blob.public_url)
     return blob.public_url
 
@@ -93,7 +99,15 @@ def go_cassandra():
         print("An error occurred.")
     return json.dumps({"rows":rows})
 
-        
+
+@app.route("/predict", methods=['POST'])
+def predict():
+    """
+    returns 'hostile' or 'friendly' as a string
+    """
+    prediction = model.predict_single_image(request.files['image'].read())
+    print(prediction[0])
+    return prediction[0]
 
 if __name__ == "__main__":
     app.run(host = '127.0.0.1', port = 8080, debug=True)
