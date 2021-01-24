@@ -6,6 +6,9 @@ from google.cloud import storage
 import uuid 
 from datetime import datetime
 
+from flask_googlemaps import GoogleMaps
+from flask_googlemaps import Map
+
 from cassandra.cluster import Cluster
 from cassandra.auth import PlainTextAuthProvider
 from cassandra.query import dict_factory
@@ -27,14 +30,44 @@ app = Flask(__name__)
 model_path = './models/resnet50.pkl'
 model = Model(model_path)
 
+# you can set key as config
+
+# Initialize the extension
+GoogleMaps(app,key='AIzaSyAj9mcBERAIP8uLtCIO4lBmeEnfkBMjEhA')
 
 @app.route('/')
 def hello_world():
-    return render_template('index.html')
+    return render_template('index.html',)
 
 @app.route('/file')
 def hello_file():
-    return render_template('file.html')
+        # creating a map in the view
+    mymap = Map(
+        identifier="view-side",
+        lat=37.4419,
+        lng=-122.1419,
+        markers=[(37.4419, -122.1419)]
+    )
+    sndmap = Map(
+        identifier="sndmap",
+        lat=37.4419,
+        lng=-122.1419,
+        markers=[
+          {
+             'icon': 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
+             'lat': 37.4419,
+             'lng': -122.1419,
+             'infobox': "<b>Hello World</b>"
+          },
+          {
+             'icon': 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
+             'lat': 37.4300,
+             'lng': -122.1400,
+             'infobox': "<b>Hello World from other place</b>"
+          }
+        ]
+    )
+    return render_template('file.html', mymap=mymap, sndmap=sndmap)
 
 # sample request: http://127.0.0.1:5000/street_view?lat=46.414382&lon=10.013988
 @app.route("/street_view")
