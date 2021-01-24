@@ -1,7 +1,5 @@
 from fastai.learner import load_learner
 
-path = './models/resnet152.pkl'
-
 
 class Model:
     def __init__(self, path):

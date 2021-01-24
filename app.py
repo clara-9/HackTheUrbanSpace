@@ -23,7 +23,7 @@ session = cluster.connect('dataspace')
 
 app = Flask(__name__)
 
-model_path = './models/resnet152.pkl'
+model_path = './models/resnet50.pkl'
 model = Model(model_path)
 
 
